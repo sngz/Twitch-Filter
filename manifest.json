@@ -1,0 +1,17 @@
+{
+  "name": "Twitch Filter",
+  "version": "1",
+  "description": "Filters out streamers and games for www.twitch.tv",
+  "background": {"page": "background.html"},
+  "manifest_version": 2,
+  "browser_action": {
+    "name": "Twitch Filter",
+    "icons": ["icon.png"],
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [ {
+    "js": [ "jquery.js", "background.js" ],
+    "css": ["customStyles.css"],
+    "matches": [ "http://www.twitch.tv/*", "https://www.twitch.tv/*"]
+  }]
+}

@@ -1,13 +1,50 @@
 $(document).ready(function() {
-	var streamItems = document.querySelectorAll('a.cap');
-	var blockedStreamers = ["/m0e_tv", "/summit1g"];
-	for(i = 0; i < streamItems.length;i++)
+
+	var blockedStreamers = ['/m0e_tv', '/summit1g'];
+	var blockedGames = ['League of Legends', 'Dota 2'];
+
+	blockGames(blockedGames);
+	blockStreamers(blockedStreamers);
+
+	MutationObserver = window.MutationObserver;
+
+	var observer = new MutationObserver(function(mutations, observer) {
+	    // fired when a mutation occurs
+	    console.log('MutationObserver Triggered');
+	    blockGames(blockedGames);
+	    blockStreamers(blockedStreamers);
+	    // ...
+	});
+
+	// define what element should be observed by the observer
+	// and what types of mutations trigger the callback
+	var target = document//.querySelector('.js-streams.streams.items');
+	var config = {subtree: true, attributes: false, childList: true, characterData:false}
+	observer.observe(target, config);
+});
+
+function blockStreamers(blockedStreamers) {
+	var streamUserNames = document.querySelectorAll('a.cap');
+	for(i = 0; i < streamUserNames.length;i++)
 	{
-	    var item = streamItems[i];
-	    var blockedBoolean = $.inArray(item.getAttribute('href'), blockedStreamers)
+	    var item = streamUserNames[i];
+	    var blockedBoolean = $.inArray(item.getAttribute('href'), blockedStreamers);
 	    if (blockedBoolean != -1) {
 	    	$(item).closest('div[class^="stream item"]').css('display', 'none');
-	    	console.log("blocked " + item.getAttribute('href'));
+	    	console.log('blocked ' + item.getAttribute('href'));
 	    }
 	}
-});
+}
+
+function blockGames(blockedGames) {
+	var streamBoxArts = document.querySelectorAll('a.boxart');
+	for(i=0; i < streamBoxArts.length;i++)
+	{
+		var item = streamBoxArts[i];
+		var blockedBoolean = $.inArray(item.getAttribute('title'), blockedGames);
+		if (blockedBoolean != -1) {
+			$(item).closest('div[class^="stream item"]').css('display', 'none');
+			console.log('blocked ' + item.getAttribute('title'));
+		}
+	}
+}

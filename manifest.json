@@ -12,6 +12,6 @@
   "content_scripts": [ {
     "js": [ "jquery.js", "background.js" ],
     "css": ["customStyles.css"],
-    "matches": [ "http://www.twitch.tv/*", "https://www.twitch.tv/*"]
+    "matches": [ "http://www.twitch.tv/directory/all", "https://www.twitch.tv/directory/all", "https://www.twitch.tv/directory/random", "http://www.twitch.tv/directory/random"]
   }]
 }

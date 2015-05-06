@@ -11,7 +11,6 @@ $(document).ready(function() {
 
 	var observer = new MutationObserver(function(mutations, observer) {
 	    // fired when a mutation occurs
-	    //console.log('MutationObserver Triggered');
 	    blockGames(blockedGames);
 	    blockStreamers(blockedStreamers);
 	    // ...
@@ -19,8 +18,8 @@ $(document).ready(function() {
 
 	// define what element should be observed by the observer
 	// and what types of mutations trigger the callback
-	var target = document//.querySelector('.js-streams.streams.items');
-	var config = {subtree: true, attributes: false, childList: true, characterData:false}
+	var target = document;
+	var config = {subtree: true, attributes: false, childList: true, characterData:false};
 	observer.observe(target, config);
 });
 
@@ -32,7 +31,6 @@ function blockStreamers(blockedStreamers) {
 	    var blockedBoolean = $.inArray(item.getAttribute('href'), blockedStreamers);
 	    if (blockedBoolean != -1) {
 	    	$(item).closest('div[class^="stream item"]').remove();
-	    	//console.log('blocked ' + item.getAttribute('href'));
 	    }
 	}
 };
@@ -45,7 +43,6 @@ function blockGames(blockedGames) {
 		var blockedBoolean = $.inArray(item.getAttribute('title'), blockedGames);
 		if (blockedBoolean != -1) {
 			$(item).closest('div[class^="stream item"]').remove();
-			//console.log('blocked ' + item.getAttribute('title'));
 		}
 	}
 };
@@ -54,14 +51,14 @@ function addBlockUserButtons() {
 	var usersList = $('p.info').children('a');
 	for(i = 0; i < usersList.length;i++) {
 		var user = usersList[i];
-		var xyz = user.getAttribute('href').replace('/profile', '');
-		var blockIdName = 'blockuser_link_' + xyz.replace('/','');
+		var streameUserName = user.getAttribute('href').replace('/profile', '');
+		var blockIdName = 'blockuser_link_' + streameUserName.replace('/','');
 		var newNode = document.createElement('a');
 		newNode.setAttribute('href', '#');
 		newNode.setAttribute('id', blockIdName);
 		$(newNode).text('BLOCK');
 		user.parentNode.insertBefore(newNode, user.nextSibling);
-		document.getElementById(blockIdName).addEventListener('click', createBlockUserFunc(xyz));
+		document.getElementById(blockIdName).addEventListener('click', createBlockUserFunc(streameUserName));
 	}
 };
 
@@ -71,7 +68,7 @@ function createBlockUserFunc(i) {
     };
 }
 
-function blockUser(y){
-	blockedStreamers.push(y);
+function blockUser(streamer){
+	blockedStreamers.push(streamer);
 	blockStreamers(blockedStreamers);
 };

@@ -5,12 +5,13 @@ $(document).ready(function() {
 
 	blockGames(blockedGames);
 	blockStreamers(blockedStreamers);
+	addBlockUserButtons();
 
 	MutationObserver = window.MutationObserver;
 
 	var observer = new MutationObserver(function(mutations, observer) {
 	    // fired when a mutation occurs
-	    console.log('MutationObserver Triggered');
+	    //console.log('MutationObserver Triggered');
 	    blockGames(blockedGames);
 	    blockStreamers(blockedStreamers);
 	    // ...
@@ -30,8 +31,8 @@ function blockStreamers(blockedStreamers) {
 	    var item = streamUserNames[i];
 	    var blockedBoolean = $.inArray(item.getAttribute('href'), blockedStreamers);
 	    if (blockedBoolean != -1) {
-	    	$(item).closest('div[class^="stream item"]').css('display', 'none');
-	    	console.log('blocked ' + item.getAttribute('href'));
+	    	$(item).closest('div[class^="stream item"]').remove();
+	    	//console.log('blocked ' + item.getAttribute('href'));
 	    }
 	}
 }
@@ -43,8 +44,19 @@ function blockGames(blockedGames) {
 		var item = streamBoxArts[i];
 		var blockedBoolean = $.inArray(item.getAttribute('title'), blockedGames);
 		if (blockedBoolean != -1) {
-			$(item).closest('div[class^="stream item"]').css('display', 'none');
-			console.log('blocked ' + item.getAttribute('title'));
+			$(item).closest('div[class^="stream item"]').remove();
+			//console.log('blocked ' + item.getAttribute('title'));
 		}
+	}
+}
+
+function addBlockUserButtons() {
+	var usersList = $('p.info').children('a');
+	for(i=0; i < usersList.length;i++) {
+		var user = usersList[i];
+		var newNode = document.createElement('a');
+		newNode.setAttribute('href', '#');
+		$(newNode).text('BLOCK');
+		user.parentNode.insertBefore(newNode, user.nextSibling);
 	}
 }

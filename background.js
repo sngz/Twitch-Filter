@@ -1,8 +1,9 @@
-var blockedStreamers = ['/m0e_tv', '/summit1g'];
+var blockedStreamers = ['m0e_tv', 'summit1g'];
 var blockedGames = ['League of Legends', 'Dota 2'];
 
 $(document).ready(function() {
 
+	console.log("LOADED");
 	blockGames(blockedGames);
 	blockStreamers(blockedStreamers);
 	addBlockUserButtons();
@@ -13,6 +14,7 @@ $(document).ready(function() {
 	    // fired when a mutation occurs
 	    blockGames(blockedGames);
 	    blockStreamers(blockedStreamers);
+	    //addBlockUserButtons();
 	    // ...
 	});
 
@@ -48,11 +50,11 @@ function blockGames(blockedGames) {
 };
 
 function addBlockUserButtons() {
-	var usersList = $('p.info').children('a');
+	var usersList = $('p.info').find('a:first');
 	for(i = 0; i < usersList.length;i++) {
 		var user = usersList[i];
-		var streameUserName = user.getAttribute('href').replace('/profile', '');
-		var blockIdName = 'blockuser_link_' + streameUserName.replace('/','');
+		var streameUserName = user.text;
+		var blockIdName = 'blockuser_link_' + streameUserName;
 		var newNode = document.createElement('a');
 		newNode.setAttribute('href', '#');
 		newNode.setAttribute('id', blockIdName);

@@ -1,4 +1,4 @@
-var blockedStreamers = ['m0e_tv', 'summit1g'];
+var blockedStreamers = ['/m0e_tv', '/summit1g', '/sodapoppin'];
 var blockedGames = ['League of Legends', 'Dota 2'];
 
 $(document).ready(function() {
@@ -29,10 +29,10 @@ function blockStreamers(blockedStreamers) {
 	var streamUserNames = document.querySelectorAll('a.cap');
 	for(i = 0; i < streamUserNames.length;i++)
 	{
-	    var item = streamUserNames[i];
+		var item = streamUserNames[i];
 	    var blockedBoolean = $.inArray(item.getAttribute('href'), blockedStreamers);
 	    if (blockedBoolean != -1) {
-	    	$(item).closest('div[class^="stream item"]').remove();
+	    	$(item).closest('div[class^="stream item"]').parent().remove();
 	    }
 	}
 };
@@ -44,7 +44,7 @@ function blockGames(blockedGames) {
 		var item = streamBoxArts[i];
 		var blockedBoolean = $.inArray(item.getAttribute('title'), blockedGames);
 		if (blockedBoolean != -1) {
-			$(item).closest('div[class^="stream item"]').remove();
+			$(item).closest('div[class^="stream item"]').parent().remove();
 		}
 	}
 };
@@ -71,6 +71,7 @@ function createBlockUserFunc(i) {
 }
 
 function blockUser(streamer){
+	streamer = "/"+streamer;
 	blockedStreamers.push(streamer);
 	blockStreamers(blockedStreamers);
 };
